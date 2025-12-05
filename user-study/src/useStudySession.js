@@ -64,7 +64,7 @@ export function useStudySession() {
   });
 
   // -----------------------------
-  // 4) SHOW_CMP (persistent)
+  // 4) SHOW_CMP (persistent) only once in this study
   // -----------------------------
   const [showCMP, setShowCMP] = useState(() => {
   const saved = localStorage.getItem(META.SHOW_CMP);
@@ -115,8 +115,8 @@ export function useStudySession() {
     setStep(newStep);
     localStorage.setItem(META.STEP, String(newStep));
 
-    setShowCMP(true);
-    localStorage.setItem(META.SHOW_CMP, "true");
+    // setShowCMP(true);
+    // localStorage.setItem(META.SHOW_CMP, "true");
   };
 
   // Optional: reset everything (useful for debugging)
