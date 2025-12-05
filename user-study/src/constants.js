@@ -9,7 +9,7 @@ export const WEBSITES = {
 };
 
 export const DESIGN_APPROACH = {
-  AUTOMATION_W_RESULTS: "automation_w_results" 
+  AUTOMATION: "automation" 
 }
 
 export const EVENT_TYPES = {
@@ -85,10 +85,7 @@ export const EVENT_TARGETS = {
   BTN_OPEN_CMP_FROM_NOTIFICATION: "btn_open_cmp_from_notification",
 
   // --- Global default dialog ---
-  CHECKBOX_USE_AS_DEFAULT: "checkbox_use_as_default",
-  DIALOG_CONFIRM_GLOBAL_DEFAULT: "dialog_confirm_global_default",
   BTN_CONFIRM_GLOBAL_DEFAULT: "btn_confirm_global_default",
-  BTN_CANCEL_GLOBAL_DEFAULT: "btn_cancel_global_default",
 
   // --- Feedback summary ---
   BAR_FEEDBACK_SUMMARY: "bar_feedback_summary",
