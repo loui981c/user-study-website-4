@@ -9,7 +9,7 @@ export const WEBSITES = {
 };
 
 export const DESIGN_APPROACH = {
-  AUTOMATION: "automation" 
+  AUTOMATION_W_RESULTS: "automation_w_results" 
 }
 
 export const EVENT_TYPES = {

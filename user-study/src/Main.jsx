@@ -144,12 +144,12 @@ function Main() {
 
         <SessionIdField className="" sessionId={sessionId} />
         
-        {/* <button
+        <button
           className="h-10 px-4 bg-red-600 text-white rounded"
           onClick={resetSession}
         >
           RESET
-        </button> */}
+        </button>
       </div>
     );
   }
@@ -187,6 +187,8 @@ function Main() {
       />
     )}
   </div>
+
+  
 
   {/* WARNING IF NO CHOICE MADE */}
   {showValidationWarning && (
@@ -235,12 +237,12 @@ function Main() {
       Go To Next Page
     </button>
 
-    {/* <button
+    <button
       className="h-10 px-4 bg-red-600 text-white rounded"
       onClick={resetSession}
     >
       RESET
-    </button> */}
+    </button>
   </div>
 </div>
   );
