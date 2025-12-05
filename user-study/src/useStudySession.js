@@ -14,7 +14,7 @@ function shuffle(array) {
 }
 
 export function useStudySession() {
-
+  
   useEffect(() => {
     const continuing = step > -1;
     if (continuing && !sessionEnded) {
@@ -74,6 +74,25 @@ export function useStudySession() {
     return true;
   });
 
+  // -----------------------------
+  // 4) TOGGLES (persistent)
+  // -----------------------------
+  const [toggles, setToggles] = useState(() => {
+    const saved = localStorage.getItem(META.TOGGLES);
+    if (saved) return JSON.parse(saved);
+
+    const defaults = {
+      marketing: false,
+      tracking: false,
+      analytics: false,
+      necessary: false
+    };
+
+    localStorage.setItem(META.TOGGLES, JSON.stringify(defaults));
+    return defaults;
+  });
+
+
   const [sessionStarted, setSessionStarted] = useState(() => {
     return localStorage.getItem(META.SESSION_STARTED) === "true";
   });
@@ -127,6 +146,8 @@ export function useStudySession() {
     localStorage.removeItem(META.SHOW_CMP);
     localStorage.removeItem(META.SESSION_STARTED);
     localStorage.removeItem(META.SESSION_ENDED);
+    localStorage.removeItem(META.TOGGLES);
+    localStorage.removeItem(META.COOKIE_STATS);
     window.location.reload();
   };
 
@@ -138,6 +159,8 @@ export function useStudySession() {
     showValidationWarning,
     sessionEnded, 
     isLoading,
+    toggles, 
+    setToggles,
     setSessionEnded,
     setShowValidationWarning, 
     nextStep, 

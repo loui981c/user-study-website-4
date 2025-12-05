@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { logEvent } from "./logger";
-import { EVENT_TARGETS, EVENT_TYPES } from "./constants";
+import { EVENT_TARGETS, EVENT_TYPES, TOGGLE_CATEGORIES, META } from "./constants";
 
-function CMP({ sessionId, siteName, index, onClose }) {
+function CMP({ sessionId, siteName, index, toggles, onClose, onToggle }) {
   const hasLoggedRef = useRef(false);
 
   useEffect(() => {
@@ -18,17 +18,29 @@ function CMP({ sessionId, siteName, index, onClose }) {
     );
   }, [sessionId, siteName, index]);
 
-  function ToggleRow({ label, logTarget }) {
+  function toggleCategory(cat) {
+    onToggle(prev => {
+      const next = {
+        ...prev,
+        [cat]: !prev[cat]
+      };
+
+      localStorage.setItem(META.TOGGLES, JSON.stringify(next));
+      return next;
+    });
+  }
+
+  function ToggleRow({ label, checked, toggleCat, logTarget }) {
     return (
       <div className="flex items-center justify-between w-full py-2">
         <span className="text-lg">{label}</span>
-        <Toggle logTarget={logTarget} />
+        <Toggle checked={checked} toggleCat={toggleCat} logTarget={logTarget} />
       </div>
     );
   }
 
-  function Toggle({ logTarget }) {
-    const [isOn, setIsOn] = useState(false);
+  function Toggle({ logTarget, checked, toggleCat }) {
+    const [isOn, setIsOn] = useState(checked);
 
     function toggle() {
       logEvent(
@@ -40,6 +52,7 @@ function CMP({ sessionId, siteName, index, onClose }) {
           );
       const newValue = !isOn;
       setIsOn(newValue);
+      toggleCategory(toggleCat);
     }
 
     return (
@@ -135,10 +148,30 @@ function CMP({ sessionId, siteName, index, onClose }) {
       <div className="m-14 flex-col">
         <p className="text-4xl font-bold text-center">Manage Automatic Consent Settings</p>
         <p className="text-base">Configure your privacy consent settings, which will be applied on every website visited.</p>
-        <ToggleRow label={"Ads and third party consent"} logTarget={EVENT_TARGETS.TOGGLE_MARKETING}></ToggleRow>
-        <ToggleRow label={"Tracking across devices"} logTarget={EVENT_TARGETS.TOGGLE_TRACKING}></ToggleRow>
-        <ToggleRow label={"Statistics and internal development"} logTarget={EVENT_TARGETS.TOGGLE_ANALYTICS}></ToggleRow>
-        <ToggleRow label={"Essential cookies"} logTarget={EVENT_TARGETS.TOGGLE_NECESSARY}></ToggleRow>
+        <ToggleRow 
+          label={"Ads and third party consent"} 
+          logTarget={EVENT_TARGETS.TOGGLE_MARKETING}
+          checked={toggles.marketing}
+          toggleCat={TOGGLE_CATEGORIES.MARKETING}
+        />
+        <ToggleRow 
+          label={"Tracking across devices"} 
+          logTarget={EVENT_TARGETS.TOGGLE_TRACKING}
+          checked={toggles.tracking}
+          toggleCat={TOGGLE_CATEGORIES.TRACKING}
+        />
+        <ToggleRow 
+          label={"Statistics and internal development"} 
+          logTarget={EVENT_TARGETS.TOGGLE_ANALYTICS}
+          checked={toggles.analytics}
+          toggleCat={TOGGLE_CATEGORIES.ANALYTICS}
+        />
+        <ToggleRow 
+          label={"Essential cookies"} 
+          logTarget={EVENT_TARGETS.TOGGLE_NECESSARY}
+          checked={toggles.necessary}
+          toggleCat={TOGGLE_CATEGORIES.NECESSARY}
+        />
         <div className="flex justify-center w-full mt-10">
           <Button label={"confirm"} logTarget={EVENT_TARGETS.BTN_CONFIRM_GLOBAL_DEFAULT} extraOnClick={() => onClose(EVENT_TARGETS.CMP_FIRST_LAYER)}></Button>
         </div>

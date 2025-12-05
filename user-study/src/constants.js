@@ -42,9 +42,8 @@ export const EVENT_TYPES = {
   SCROLL: "scroll",
 
   // --- Feedback ---
-  FEEDBACK_SHOWN: "feedback_shown",
-  NOTIFICATION_SHOWN: "notification_shown",
-  NOTIFICATION_CLICK: "notification_click",
+  SUMMARY_SHOWN: "summary_shown",
+  SUMMARY_CLOSE: "summary_close",
 
   // --- History system ---
   HISTORY_ITEM_UPDATE: "history_item_update",
@@ -60,6 +59,13 @@ export const EVENT_TARGETS = {
   // --- CMP structural targets ---
   CMP_FIRST_LAYER: "cmp_first_layer",
   CMP_SECOND_LAYER: "cmp_second_layer",
+
+  SUMMARY: "summary",
+  BTN_ACCEPTED_COOKIES: "btn_accepted_cookies",
+  BTN_DECLINED_COOKIES: "btn_declined_cookies",  
+  BTN_CLOSE_SUMMARY: "btn_close_summary",
+  SUMMARY_OPEN_MORE_DETAILS: "summary_open_more_details",
+  SUMMARY_CLOSE_MORE_DETAILS: "summary_close_more_details",
 
   // --- Buttons ---
   BTN_ACCEPT_ALL: "btn_accept_all",
@@ -116,10 +122,49 @@ export const META = {
   SHOW_CMP: "show_cmp",
   SESSION_STARTED: "sessionStarted",
   SESSION_ENDED: "sessionEnded",
+  TOGGLES: "toggles",
+  COOKIE_STATS: "cookie_stats"
 }
+
+export const TOGGLE_CATEGORIES = {
+  MARKETING: "marketing",
+  TRACKING: "tracking",
+  ANALYTICS: "analytics",
+  NECESSARY: "necessary"
+};
 
 export const PAGES = [
   { id: 0, image: Zalando, name: WEBSITES.ZALANDO },
   { id: 1, image: eu_health, name: WEBSITES.EU_HEALTH },
   { id: 2, image: Santander, name: WEBSITES.SANTANDER }, 
 ];
+
+export const COOKIE_MODEL = {
+  [WEBSITES.ZALANDO]: {
+    total: 100,
+    categories: {
+      marketing: 50,
+      tracking: 27,
+      analytics: 18,
+      necessary: 5,
+    },
+  },
+  [WEBSITES.EU_HEALTH]: {
+    total: 20,
+    categories: {
+      marketing: 2,
+      tracking: 3,
+      analytics: 5,
+      necessary: 10,
+    },
+  },
+  [WEBSITES.SANTANDER]: {
+    total: 30,
+    categories: {
+      marketing: 5,
+      tracking: 8,
+      analytics: 7,
+      necessary: 10,
+    },
+  },
+};

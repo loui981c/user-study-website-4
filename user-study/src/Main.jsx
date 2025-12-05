@@ -5,6 +5,8 @@ import { useIsScreenTooSmall } from "./useIsScreenTooSmall";
 import { logEvent } from "./logger";
 import SessionIdField from "./CopyIdField";
 import { useEffect, useState } from "react";
+import ConsentSummary from "./ConsentSummary";
+import { computeAllCookieStats } from "./computeCookies";
 
 function Main() {
   const { 
@@ -15,6 +17,8 @@ function Main() {
     showValidationWarning, 
     sessionEnded, 
     isLoading,
+    toggles,
+    setToggles,
     setSessionEnded,
     setShowValidationWarning, 
     nextStep, 
@@ -79,6 +83,8 @@ function Main() {
 
     setShowCMP(false);
     setShowValidationWarning(false);
+    
+    localStorage.setItem(META.COOKIE_STATS, JSON.stringify(computeAllCookieStats(toggles)));
     localStorage.setItem(META.SHOW_CMP, "false");
   }
 
@@ -133,7 +139,6 @@ function Main() {
 
   // FINISH PAGE
   if (step >= order.length) {
-    console.log(step)
     return (
       <div className="w-screen h-screen flex flex-col items-center justify-center bg-white">
         <h1 className="text-4xl font-bold">Thank you for completing the study!</h1>
@@ -162,14 +167,16 @@ function Main() {
     <div className="w-screen h-screen flex flex-col">
     {/* IMAGE + CMP CENTERED */}
     <div className="relative flex-1 flex items-center justify-center"
-        onClick={() =>
-          logEvent(
-            sessionId,
-            currentPage.name,
-            step,
-            EVENT_TYPES.CLICK,
-            EVENT_TARGETS.OUTSIDE_CMP
-          )
+        onClick={() => {
+          if (showCMP) {
+            logEvent(
+              sessionId,
+              currentPage.name,
+              step,
+              EVENT_TYPES.CLICK,
+              EVENT_TARGETS.OUTSIDE_CMP
+            )
+          }}
         }>
       <img
         src={currentPage.image}
@@ -183,12 +190,20 @@ function Main() {
         sessionId={sessionId}
         siteName={currentPage.name}
         index={step}
+        toggles={toggles}
         onClose={(eventTarget) => handleCMPEvent(eventTarget)}
+        onToggle={setToggles}
       />
     )}
   </div>
 
-  
+  {!showCMP && (
+    <ConsentSummary 
+        sessionId={sessionId}
+        site={currentPage}
+        step={step}
+      /> 
+  )}
 
   {/* WARNING IF NO CHOICE MADE */}
   {showValidationWarning && (
