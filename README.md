@@ -1,1 +1,2 @@
-# user-study-website-4
+# user-study-website-automation-w-results
+Only make changes to main branch, then commit the changes. Run these commands to deploy (we use a temp branch gh-pages for deploy) git checkout main git push origin --delete gh-pages npm run deploy
