@@ -149,12 +149,12 @@ function Main() {
 
         <SessionIdField className="" sessionId={sessionId} />
         
-        <button
+        {/* <button
           className="h-10 px-4 bg-red-600 text-white rounded"
           onClick={resetSession}
         >
           RESET
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -224,7 +224,7 @@ function Main() {
   {/* BOTTOM BUTTONS */}
   <div className="py-2 flex justify-center gap-4 bg-white/50 backdrop-blur-sm">
     <button
-      className="h-10 px-4 bg-black text-white rounded"
+      className="h-20 px-8 bg-green-500 text-white rounded text-xl cursor-pointer hover:bg-slate-400 font-bold"
       onClick={(e) => {
         e.stopPropagation()
         if (showCMP) {
@@ -252,12 +252,12 @@ function Main() {
       Go To Next Page
     </button>
 
-    <button
+    {/* <button
       className="h-10 px-4 bg-red-600 text-white rounded"
       onClick={resetSession}
     >
       RESET
-    </button>
+    </button> */}
   </div>
 </div>
   );
